@@ -27,5 +27,7 @@ Attrition: Whether the employee has left the company (Yes/No)
 
 This dataset is used for practice.
 
+Link: https://www.kaggle.com/datasets/hopesb/hr-analytics-dataset?resource=download&select=Messy_HR_Dataset_Detailed.csv
+
 License
 This dataset is provided by Kaggle under the Kaggle Terms of Service. Make sure to check and comply with the licensing terms before using the dataset.
