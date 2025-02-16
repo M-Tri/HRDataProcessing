@@ -1,0 +1,14 @@
+/Users/amine/Documents/dev/work/dotnetProject/bin/Debug/net9.0/dotnetProject
+/Users/amine/Documents/dev/work/dotnetProject/bin/Debug/net9.0/dotnetProject.deps.json
+/Users/amine/Documents/dev/work/dotnetProject/bin/Debug/net9.0/dotnetProject.runtimeconfig.json
+/Users/amine/Documents/dev/work/dotnetProject/bin/Debug/net9.0/dotnetProject.dll
+/Users/amine/Documents/dev/work/dotnetProject/bin/Debug/net9.0/dotnetProject.pdb
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/dotnetProject.GeneratedMSBuildEditorConfig.editorconfig
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/dotnetProject.AssemblyInfoInputs.cache
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/dotnetProject.AssemblyInfo.cs
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/dotnetProject.csproj.CoreCompileInputs.cache
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/dotnetProject.dll
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/refint/dotnetProject.dll
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/dotnetProject.pdb
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/dotnetProject.genruntimeconfig.cache
+/Users/amine/Documents/dev/work/dotnetProject/obj/Debug/net9.0/ref/dotnetProject.dll

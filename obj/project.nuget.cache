@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "c8eLAQqxKi4=",
+  "success": true,
+  "projectFilePath": "/Users/amine/Documents/dev/work/dotnetProject/dotnetProject.csproj",
+  "expectedPackageFiles": [
+    "/Users/amine/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
