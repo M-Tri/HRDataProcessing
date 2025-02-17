@@ -6,6 +6,29 @@ Goals :
     - Github version control.
     - C#.
     - Process data.
+ 
+Reflections:
+Why use C# instead of C++ ?
+
+1. Data Binding & Reflection:  
+   - C#: Built-in reflection and data binding support.  
+   - C++: No built-in reflection, requires third-party libraries.
+
+2. Language Features:  
+   - C#: Supports attributes (e.g., `[TypeConverter]`).  
+   - C++: No attribute-based reflection, manual coding.
+
+3. Garbage Collection**:  
+   - C#: Automatic garbage collection in .NET.  
+   - C++: Manual memory management with `new`, `delete`.
+
+4. Built-in Libraries:  
+   - C#: Rich libraries (e.g., `CsvHelper`).  
+   - C++: Third-party libraries, more manual work.
+
+5. Ease of Use:  
+   - C#: Declarative system with attributes.  
+   - C++: Manual serialization, more error-prone.
 
 
 References : 
