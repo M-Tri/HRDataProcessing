@@ -18,7 +18,7 @@ Why use C# instead of C++ ?
    - C#: Supports attributes (e.g., `[TypeConverter]`).  
    - C++: No attribute-based reflection, manual coding.
 
-3. Garbage Collection**:  
+3. Garbage Collection:  
    - C#: Automatic garbage collection in .NET.  
    - C++: Manual memory management with `new`, `delete`.
 
