@@ -1,76 +1,94 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using System;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
 
-namespace dotnetProject
+namespace HRDataProcessing;
+
+internal class Program
 {
-    class Program
+    private const int MaxEmployeesToDisplay = 10;
+
+    private static int Main(string[] args)
     {
-        static void Main(string[] args)
+        var filePath = args.Length > 0 ? args[0] : "data.csv";
+
+        if (!File.Exists(filePath))
         {
-            // Set the file path
-            var filePath = "data.csv";
+            Console.Error.WriteLine($"Error: CSV file not found: {filePath}");
+            Console.Error.WriteLine("Usage: dotnet run -- [path-to-csv]");
+            return 1;
+        }
 
-            // Define padding sizes for each column
-            int employeeIdPadding = 15;
-            int namePadding = 30;
-            int trainingCostPadding = 20;
-            int startDatePadding = 20;
+        var employees = LoadEmployees(filePath);
+        PrintResults(employees, filePath);
+        PrintExportedFiles(CsvExporter.ExportTableauFiles(employees, "output"));
 
-            // Calculate the separator line length
-            int separatorLineLength = employeeIdPadding + namePadding + trainingCostPadding + startDatePadding;
+        return 0;
+    }
 
-            // Read and process the CSV file
-            using (var reader = new StreamReader(filePath))
-            {
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
-                {
-                    // Read the records from the CSV file
-                    var records = csv.GetRecords<Employee>().ToList();
+    private static List<Employee> LoadEmployees(string filePath)
+    {
+        using var reader = new StreamReader(filePath);
+        using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
 
-                    // Order the records by Training Cost in ascending order
-                    var sortedRecords = records.OrderBy(r => r.TrainingCost).ToList();
+        return csv.GetRecords<Employee>().ToList();
+    }
 
-                    // Print header with padding
-                    Console.WriteLine("Employee ID".PadRight(employeeIdPadding) + 
-                                      "Name".PadRight(namePadding) + 
-                                      "Training Cost".PadRight(trainingCostPadding) + 
-                                      "Start Date".PadRight(startDatePadding));
+    private static void PrintResults(IReadOnlyCollection<Employee> employees, string filePath)
+    {
+        Console.WriteLine("HR Data Processing");
+        Console.WriteLine("==================");
+        Console.WriteLine($"File: {filePath}");
+        Console.WriteLine($"Employees loaded: {employees.Count}");
 
-                    // Print a separator line
-                    Console.WriteLine(new string('-', separatorLineLength));
+        Console.WriteLine();
+        Console.WriteLine($"Lowest training costs (first {Math.Min(MaxEmployeesToDisplay, employees.Count)} records)");
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine($"{"Employee ID",-12} {"Title",-32} {"Cost",10} {"Training Date",-14}");
 
-                    // Output the sorted records with padding between columns
-                    foreach (var record in sortedRecords)
-                    {
-                        Console.WriteLine(
-                            record.EmployeeID.ToString().PadRight(employeeIdPadding) +
-                            record.Title.PadRight(namePadding) +
-                            record.TrainingCost.ToString("F2").PadRight(trainingCostPadding) + // Format Training Cost to 2 decimal places
-                            record.StartDate.ToString("dd-MMM-yyyy").PadRight(startDatePadding)
-                        );
-                    }
+        foreach (var employee in HrDataAnalyzer.GetEmployeesSortedByTrainingCost(employees).Take(MaxEmployeesToDisplay))
+        {
+            Console.WriteLine(
+                $"{employee.EmployeeID,-12} {TrimForDisplay(employee.Title, 32),-32} {employee.TrainingCost,10:C2} {employee.TrainingDate:dd-MMM-yyyy}");
+        }
 
-                    // Sum Training Costs by year
-                    var trainingCostByYear = records
-                        .GroupBy(r => r.StartDate.Year)  // Group by year
-                        .Select(g => new { Year = g.Key, TotalTrainingCost = g.Sum(r => r.TrainingCost) })  // Sum Training Costs for each year
-                        .OrderByDescending(g => g.TotalTrainingCost)  // Order by total cost in descending order
-                        .FirstOrDefault();  // Get the year with the highest total cost
+        Console.WriteLine();
+        Console.WriteLine("Training cost by year");
+        Console.WriteLine("---------------------");
 
-                    // Output the most expensive year
-                    if (trainingCostByYear != null)
-                    {
-                        Console.WriteLine("\nThe most expensive year for training is: ");
-                        Console.WriteLine($"Year: {trainingCostByYear.Year}");
-                        Console.WriteLine($"Total Training Cost: {trainingCostByYear.TotalTrainingCost:F2}");
-                    }
-                }
-            }
+        foreach (var yearSummary in HrDataAnalyzer.GetTotalTrainingCostByYear(employees))
+        {
+            Console.WriteLine($"{yearSummary.Year}: {yearSummary.TotalTrainingCost:C2}");
+        }
+
+        var mostExpensiveYear = HrDataAnalyzer.GetMostExpensiveTrainingYear(employees);
+        if (mostExpensiveYear is not null)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Most expensive training year");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine($"{mostExpensiveYear.Year}: {mostExpensiveYear.TotalTrainingCost:C2}");
+        }
+    }
+
+    private static string TrimForDisplay(string value, int maxLength)
+    {
+        if (value.Length <= maxLength)
+        {
+            return value;
+        }
+
+        return value[..(maxLength - 3)] + "...";
+    }
+
+    private static void PrintExportedFiles(IEnumerable<string> exportedFiles)
+    {
+        Console.WriteLine();
+        Console.WriteLine("Generated Tableau-ready CSV files:");
+
+        foreach (var filePath in exportedFiles)
+        {
+            Console.WriteLine($"- {filePath}");
         }
     }
 }

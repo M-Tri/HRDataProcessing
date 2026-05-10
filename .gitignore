@@ -16,3 +16,8 @@ Thumbs.db
 # Ignore log files
 *.log
 
+# Ignore generated Tableau CSV exports
+output/*.csv
+
+# Ignore local Python virtual environments
+visualization/.venv/
