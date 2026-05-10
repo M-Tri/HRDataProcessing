@@ -1,56 +1,172 @@
 # HRDataProcessing
-Use C# to process HR data
 
-Goals : 
-- Practice:
-    - Github version control.
-    - C#.
-    - Process data.
- 
-Reflections:
-Why use C# instead of C++ ?
+This is a small C# console app for practicing CSV data processing with .NET.
 
-1. Data Binding & Reflection:  
-   - C#: Built-in reflection and data binding support.  
-   - C++: No built-in reflection, requires third-party libraries.
+The project reads employee HR training data from a CSV file, does a few simple calculations, and prints a short summary in the console. It is meant as a learning project for C#, GitHub, and basic data processing.
 
-2. Language Features:  
-   - C#: Supports attributes (e.g., `[TypeConverter]`).  
-   - C++: No attribute-based reflection, manual coding.
+## What it does
 
-3. Garbage Collection:  
-   - C#: Automatic garbage collection in .NET.  
-   - C++: Manual memory management with `new`, `delete`.
+- Loads employee records from `data.csv`
+- Sorts employees by training cost
+- Shows total training cost by training year
+- Finds the training year with the highest total cost
+- Generates Tableau-ready CSV summary files in `output/`
 
-4. Built-in Libraries:  
-   - C#: Rich libraries (e.g., `CsvHelper`).  
-   - C++: Third-party libraries, more manual work.
+## How to run
 
-5. Ease of Use:  
-   - C#: Declarative system with attributes.  
-   - C++: Manual serialization, more error-prone.
+Run with the default CSV file:
 
+```bash
+dotnet run
+```
 
-References : 
+Or pass a CSV file path:
 
-Title: HR Analytics Dataset
-Source: Kaggle - HR Analytics Dataset
-File: Cleaned_HR_Data_Analysis.csv
-Description: This dataset provides information about employee satisfaction, department, age, tenure, salary, and whether an employee left the company.
+```bash
+dotnet run -- data.csv
+```
 
-The dataset contains the following columns:
-EmployeeID: Unique ID for each employee
-Age: Age of the employee
-Gender: Gender of the employee
-Department: Department where the employee works
-DistanceFromHome: Distance of the employee's home from the workplace
-EmployeeSatisfaction: Level of employee satisfaction (scale: 1 to 10)
-Salary: Salary of the employee
-Attrition: Whether the employee has left the company (Yes/No)
+## Sample output
 
-This dataset is used for practice.
+```text
+HR Data Processing
+==================
+File: data.csv
+Employees loaded: 2845
 
-Link: https://www.kaggle.com/datasets/hopesb/hr-analytics-dataset?resource=download&select=Messy_HR_Dataset_Detailed.csv
+Lowest training costs (first 10 records)
+--------------------------------------------------
+Employee ID  Title                                  Cost Training Date
+2406         Network Engineer                    $100.04 19-May-2023
+...
 
-License
-This dataset is provided by Kaggle under the Kaggle Terms of Service. Make sure to check and comply with the licensing terms before using the dataset.
+Training cost by year
+---------------------
+2023: $946,244.05
+2022: $644,904.58
+
+Most expensive training year
+----------------------------
+2023: $946,244.05
+
+Generated Tableau-ready CSV files:
+- output/training_cost_by_year.csv
+- output/training_cost_by_business_unit.csv
+- output/top_training_cost_employees.csv
+- output/training_program_summary.csv
+```
+
+## Tableau Visualization
+
+The app generates simple CSV summaries that can be imported into Tableau. Run:
+
+```bash
+dotnet run
+```
+
+The generated files will appear in the `output/` folder:
+
+- `training_cost_by_year.csv`
+- `training_cost_by_business_unit.csv`
+- `top_training_cost_employees.csv`
+- `training_program_summary.csv`
+
+Possible dashboard ideas:
+
+- Training cost by year
+- Training cost by business unit
+- Top employees by training cost
+- Training program cost breakdown
+- Employee rating vs training cost, using `CurrentEmployeeRating` and `TrainingCost`
+
+The CSV output files can also be opened in Tableau, Excel, or Python.
+
+## Optional Visualization
+
+There is a small optional Python script that turns two generated CSV summaries into chart images.
+
+First, run the C# app:
+
+```bash
+dotnet run --project HRDataProcessing.csproj
+```
+
+Then create and activate a Python virtual environment:
+
+```bash
+cd visualization
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install the Python packages and generate charts:
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python visualize.py
+```
+
+When finished, you can leave the virtual environment:
+
+```bash
+deactivate
+```
+
+The generated chart images are saved in:
+
+```text
+visualization/charts/
+```
+
+If `python3 -m venv .venv` fails because of a local Python version issue, remove the partial environment and create it with a stable installed Python version:
+
+```bash
+rm -rf .venv
+/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Generated charts:
+
+![Training Cost by Year](visualization/charts/training_cost_by_year.png)
+
+![Training Cost by Business Unit](visualization/charts/training_cost_by_business_unit.png)
+
+## Dataset
+
+The included `data.csv` file contains employee HR and training fields used by `Employee.cs`, including:
+
+- Employee ID
+- StartDate
+- Title
+- BusinessUnit
+- EmployeeStatus
+- EmployeeType
+- PayZone
+- EmployeeClassificationType
+- DepartmentType
+- Division
+- DOB
+- State
+- GenderCode
+- RaceDesc
+- MaritalDesc
+- Performance Score
+- Current Employee Rating
+- Survey Date
+- Engagement Score
+- Satisfaction Score
+- Work-Life Balance Score
+- Training Date
+- Training Program Name
+- Training Type
+- Training Outcome
+- Training Duration(Days)
+- Training Cost
+- Age
+
+Dataset source: Kaggle HR Analytics Dataset  
+Link: https://www.kaggle.com/datasets/hopesb/hr-analytics-dataset
+
+This dataset is used here for practice. Check the Kaggle page for the original dataset details and licensing terms.
