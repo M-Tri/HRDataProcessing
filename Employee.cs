@@ -1,7 +1,7 @@
 using CsvHelper.Configuration.Attributes;
 using CsvHelper.TypeConversion;
-using System;
-using System.Globalization;
+
+namespace HRDataProcessing;
 
 public class Employee
 {
@@ -13,47 +13,47 @@ public class Employee
     public DateTime StartDate { get; set; }
 
     [Name("Title")]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [Name("BusinessUnit")]
-    public string BusinessUnit { get; set; }
+    public string BusinessUnit { get; set; } = string.Empty;
 
     [Name("EmployeeStatus")]
-    public string EmployeeStatus { get; set; }
+    public string EmployeeStatus { get; set; } = string.Empty;
 
     [Name("EmployeeType")]
-    public string EmployeeType { get; set; }
+    public string EmployeeType { get; set; } = string.Empty;
 
     [Name("PayZone")]
-    public string PayZone { get; set; }
+    public string PayZone { get; set; } = string.Empty;
 
     [Name("EmployeeClassificationType")]
-    public string EmployeeClassificationType { get; set; }
+    public string EmployeeClassificationType { get; set; } = string.Empty;
 
     [Name("DepartmentType")]
-    public string DepartmentType { get; set; }
+    public string DepartmentType { get; set; } = string.Empty;
 
     [Name("Division")]
-    public string Division { get; set; }
+    public string Division { get; set; } = string.Empty;
 
     [Name("DOB")]
     [TypeConverter(typeof(CustomDateTimeConverter))]
     public DateTime DOB { get; set; }
 
     [Name("State")]
-    public string State { get; set; }
+    public string State { get; set; } = string.Empty;
 
     [Name("GenderCode")]
-    public string GenderCode { get; set; }
+    public string GenderCode { get; set; } = string.Empty;
 
     [Name("RaceDesc")]
-    public string RaceDesc { get; set; }
+    public string RaceDesc { get; set; } = string.Empty;
 
     [Name("MaritalDesc")]
-    public string MaritalDesc { get; set; }
+    public string MaritalDesc { get; set; } = string.Empty;
 
     [Name("Performance Score")]
-    public string PerformanceScore { get; set; }
+    public string PerformanceScore { get; set; } = string.Empty;
 
     [Name("Current Employee Rating")]
     public int CurrentEmployeeRating { get; set; }
@@ -76,13 +76,13 @@ public class Employee
     public DateTime TrainingDate { get; set; }
 
     [Name("Training Program Name")]
-    public string TrainingProgramName { get; set; }
+    public string TrainingProgramName { get; set; } = string.Empty;
 
     [Name("Training Type")]
-    public string TrainingType { get; set; }
+    public string TrainingType { get; set; } = string.Empty;
 
     [Name("Training Outcome")]
-    public string TrainingOutcome { get; set; }
+    public string TrainingOutcome { get; set; } = string.Empty;
 
     [Name("Training Duration(Days)")]
     public int TrainingDurationDays { get; set; }
